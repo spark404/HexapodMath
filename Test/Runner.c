@@ -6,9 +6,10 @@
 
 static void runAllTests(void)
 {
-    RUN_TEST_GROUP(HexapodMath)
+    RUN_TEST_GROUP(InverseKinematics)
     RUN_TEST_GROUP(AdditionalFunctions)
     RUN_TEST_GROUP(ForwardKinematics)
+    RUN_TEST_GROUP(HexapodMath)
 }
 
 int main(int argc, const char *argv[]) {

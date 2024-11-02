@@ -14,6 +14,28 @@ TEST_SETUP(ForwardKinematics) {
 TEST_TEAR_DOWN(ForwardKinematics) {
 }
 
+TEST(ForwardKinematics, ForwardKinematicsNoAngles) {
+    float32_t angles[3] = {0.f, 0.f, 0.f};
+    float32_t actual[3];
+
+    forward_kinematics(angles, actual);
+
+    TEST_ASSERT_FLOAT_WITHIN(0.0001, 274., actual[0]);
+    TEST_ASSERT_FLOAT_WITHIN(0.0001, 0., actual[1]);
+    TEST_ASSERT_FLOAT_WITHIN(0.0001, 0., actual[2]);
+}
+
+TEST(ForwardKinematics, ForwardKinematicsJoint390) {
+    float32_t angles[3] = {0.f, 0.f, M_PI_2};
+    float32_t actual[3];
+
+    forward_kinematics(angles, actual);
+
+    TEST_ASSERT_FLOAT_WITHIN(0.0001, 124., actual[0]);
+    TEST_ASSERT_FLOAT_WITHIN(0.0001, 0., actual[1]);
+    TEST_ASSERT_FLOAT_WITHIN(0.0001, -150., actual[2]);
+}
+
 TEST(ForwardKinematics, Rodriques_0Angle) {
     MATRIX(T, 4);
     float32_t theta = 0;

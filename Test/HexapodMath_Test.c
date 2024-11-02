@@ -26,8 +26,8 @@ TEST(HexapodMath, PolarToCartesian)
 
 	convert_2d_polar_to_cartesian(polar, cartesian);
 
-	TEST_ASSERT_FLOAT_WITHIN(0.001, 51.62188, cartesian[0]);
-	TEST_ASSERT_FLOAT_WITHIN(0.001, 73.723686, cartesian[1]);
+	TEST_ASSERT_FLOAT_WITHIN(0.001, 51.6219, cartesian[0]);
+	TEST_ASSERT_FLOAT_WITHIN(0.001, 73.7237, cartesian[1]);
 }
 
 TEST(HexapodMath, PolarToCartesianQ2)
@@ -37,8 +37,8 @@ TEST(HexapodMath, PolarToCartesianQ2)
 
     convert_2d_polar_to_cartesian(polar, cartesian);
 
-    TEST_ASSERT_FLOAT_WITHIN(0.001, 51.62188, cartesian[0]);
-    TEST_ASSERT_FLOAT_WITHIN(0.001, -73.723686, cartesian[1]);
+    TEST_ASSERT_FLOAT_WITHIN(0.001, 51.6219, cartesian[0]);
+    TEST_ASSERT_FLOAT_WITHIN(0.001, -73.7237, cartesian[1]);
 }
 
 TEST(HexapodMath, PolarToCartesianQ3)
@@ -48,51 +48,10 @@ TEST(HexapodMath, PolarToCartesianQ3)
 
     convert_2d_polar_to_cartesian(polar, cartesian);
 
-    TEST_ASSERT_FLOAT_WITHIN(0.001, -51.62188, cartesian[0]);
-    TEST_ASSERT_FLOAT_WITHIN(0.001, 73.723686, cartesian[1]);
+    TEST_ASSERT_FLOAT_WITHIN(0.001, -51.6219, cartesian[0]);
+    TEST_ASSERT_FLOAT_WITHIN(0.001, 73.7237, cartesian[1]);
 }
 
-TEST(HexapodMath, InverseKinematics_Start)
-{
-	float32_t origin[3] = {0, 0, 0};
-	float32_t tip[3] = {124, 0, -150};
-
-	float32_t actual[3];
-
-    inverse_kinematics(origin, tip, actual);
-
-	TEST_ASSERT_FLOAT_WITHIN(0.0001, 0, actual[0]);
-	TEST_ASSERT_FLOAT_WITHIN(0.0001, 0, actual[1]);
-	TEST_ASSERT_FLOAT_WITHIN(0.0001, M_PI_2, actual[2]);
-}
-
-TEST(HexapodMath, InverseKinematics_Extreme)
-{
-	float32_t origin[3] = {0, 0, 0};
-	float32_t tip[3] = {274, 0, 0};
-
-	float32_t actual[3];
-
-    inverse_kinematics(origin, tip, actual);
-
-	TEST_ASSERT_FLOAT_WITHIN(0.0001, 0, actual[0]);
-	TEST_ASSERT_FLOAT_WITHIN(0.0001, 0, actual[1]);
-	TEST_ASSERT_FLOAT_WITHIN(0.0001, 0, actual[2]);
-}
-
-TEST(HexapodMath, InverseKinematics_Realistic)
-{
-	float32_t origin[3] = {0, 0, 0};
-	float32_t tip[3] = {100, 0, -70};
-
-	float32_t actual[3];
-
-    inverse_kinematics(origin, tip, actual);
-
-    TEST_ASSERT_FLOAT_WITHIN(0.0001, 0, actual[0]);
-    TEST_ASSERT_FLOAT_WITHIN(0.0001, -0.91485131, actual[1]);
-    TEST_ASSERT_FLOAT_WITHIN(0.0001, 2.3854189, actual[2]);
-}
 
 TEST(HexapodMath, Pose_Set)
 {
@@ -218,7 +177,7 @@ TEST(HexapodMath, Matrix3d_RotationX)
 	float32_t pData[4*4];
 	arm_mat_init_f32(&actual, 4, 4, pData);
 
-	float32_t omega = 30.0 * M_PI / 180;
+	float32_t omega = 30.0f * (float32_t)M_PI / 180;
 
 	matrix_3d_rotation_x_matrix(&actual, omega);
 
@@ -307,12 +266,14 @@ TEST(HexapodMath, Matrix3d_RotationZ)
 
 TEST(HexapodMath, VectorCalculation)
 {
-    float32_t tipVector[4] = {122.745f, -175.229f, 0, 1};
+    // Reference position for the front right leg
+    // standing on the ground with angles 0, 0, pi/2
+    float32_t tipVector[4] = {122.7454f, -175.2986f, 0.f, 1};
 
     struct pose hexapod, body, coxa;
     pose_set(&hexapod, 0, 0, 150, 0, 0, 0);
     pose_set(&body, 0, 0, 0, 0, 0, 0);
-    pose_set(&coxa, 51.6219f, -73.7237f, 0, M_PI_2, 0, D2R(-55));
+    pose_set(&coxa, 51.6219f, -73.7237f, 0, 0, 0, D2R(-55));
 
     MATRIX4(Thexapod);
     MATRIX4(Tbody);
@@ -332,34 +293,10 @@ TEST(HexapodMath, VectorCalculation)
     arm_mat_inverse_f32(&T, &Ti);
 
     float32_t actual[4];
+    float32_t expected[4] = { 124, 0, -150, 1};
     arm_mat_vec_mult_f32(&Ti, tipVector, actual);
 
-    TEST_ASSERT_FLOAT_WITHIN(0.1, 124, actual[0]);
-    TEST_ASSERT_FLOAT_WITHIN(0.1, -150, actual[1]);
-    TEST_ASSERT_FLOAT_WITHIN(0.1, 0, actual[2]);
-    TEST_ASSERT_FLOAT_WITHIN(0.0001, 1, actual[3]);
-}
-
-TEST(HexapodMath, ForwardKinematicsNoAngles) {
-    float32_t angles[3] = {0.f, 0.f, 0.f};
-    float32_t actual[3];
-
-    forward_kinematics(angles, actual);
-
-    TEST_ASSERT_FLOAT_WITHIN(0.000001, 274., actual[0]);
-    TEST_ASSERT_FLOAT_WITHIN(0.000001, 0., actual[1]);
-    TEST_ASSERT_FLOAT_WITHIN(0.000001, 0., actual[2]);
-}
-
-TEST(HexapodMath, ForwardKinematicsJoint390) {
-    float32_t angles[3] = {0.f, 0.f, M_PI_2};
-    float32_t actual[3];
-
-    forward_kinematics(angles, actual);
-
-    TEST_ASSERT_FLOAT_WITHIN(0.000001, 124., actual[0]);
-    TEST_ASSERT_FLOAT_WITHIN(0.000001, 0., actual[1]);
-    TEST_ASSERT_FLOAT_WITHIN(0.000001, -150., actual[2]);
+    TEST_ASSERT_FLOAT_ARRAY_WITHIN(0.001, expected, actual, 4);
 }
 
 TEST(HexapodMath, InverseKinematics_To_ForwardKinematics)
@@ -392,5 +329,5 @@ TEST(HexapodMath, InverseKinematics_To_ForwardKinematics2)
     float32_t actual[3];
     inverse_kinematics(origin, actual_coords, actual);
 
-    TEST_ASSERT_FLOAT_ARRAY_WITHIN(0.05, angles, actual, 3);
+    TEST_ASSERT_FLOAT_ARRAY_WITHIN(0.00001, angles, actual, 3);
 }
