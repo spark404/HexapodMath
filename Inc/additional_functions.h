@@ -32,6 +32,16 @@ void arm_vec_cross(const float32_t *pSrcA, const float32_t *pSrcB, float32_t *pD
 
 void arm_vec_add(const float32_t *pSrcA, const float32_t *pSrcB, float32_t *pDst, uint32_t blocksize);
 
+void arm_vec_sub(const float32_t *pSrcA, const float32_t *pSrcB, float32_t *pDst, uint32_t blocksize);
+
+void arm_vec_mult_scalar_f32(const float32_t *pSrc, float32_t multiplier, float32_t *pDst, uint32_t blocksize);
+
+void arm_vec_add_scalar_f32(const float32_t *pSrc, float32_t addition, float32_t *pDst, uint32_t blocksize);
+
+void arm_vec_copy_f32(const float32_t *pSrc, float32_t *pDst, uint32_t blocksize);
+
+float32_t arm_vec_magnitude(const float32_t *pA, uint32_t blockSize);
+
 void arm_mat_identity_f32(arm_matrix_instance_f32 *M);
 
 void arm_mat_mult_scalar_f32(float32_t value, arm_matrix_instance_f32 *Msrc, arm_matrix_instance_f32 *Mdst);

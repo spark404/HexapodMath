@@ -19,6 +19,10 @@ void matrix_3d_rotation_x_matrix(arm_matrix_instance_f32 *T, float32_t omega);
 void matrix_3d_rotation_y_matrix(arm_matrix_instance_f32 *T, float32_t omega);
 void matrix_3d_rotation_z_matrix(arm_matrix_instance_f32 *T, float32_t omega);
 
+void matrix_3d_invert(arm_matrix_instance_f32 *Tsrc, arm_matrix_instance_f32 *Tdst);
+
+void matrix_3d_vec_transform(arm_matrix_instance_f32 *T, const float32_t pSrc[3], float32_t pDst[3]);
+
 #ifdef __cplusplus
 }
 #endif

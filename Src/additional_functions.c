@@ -23,7 +23,7 @@ void arm_vec_norm_f32(const float32_t *pSrc, uint32_t blockSize, float32_t *pRes
 
 // Function to normalize the vector
 void arm_vec_normalize_f32(const float32_t *pSrc, float32_t *pDst, uint32_t blockSize) {
-    float norm;
+    float32_t norm;
     arm_vec_norm_f32(pSrc, blockSize, &norm);
 
     if (norm > 0.0f) {
@@ -63,6 +63,44 @@ void arm_vec_add(const float32_t *pSrcA, const float32_t *pSrcB, float32_t *pDst
     for (uint32_t i = 0; i<blocksize; i++) {
         pDst[i] = pSrcA[i] + pSrcB[i];
     }
+}
+
+void arm_vec_sub(const float32_t *pSrcA, const float32_t *pSrcB, float32_t *pDst, uint32_t blocksize)
+{
+    for (uint32_t i = 0; i<blocksize; i++) {
+        pDst[i] = pSrcA[i] - pSrcB[i];
+    }
+}
+
+void arm_vec_mult_scalar_f32(const float32_t *pSrc, const float32_t multiplier, float32_t *pDst, uint32_t blocksize) {
+    for (uint32_t i = 0; i<blocksize; i++) {
+        pDst[i] = pSrc[i] * multiplier;
+    }
+}
+
+void arm_vec_copy_f32(const float32_t *pSrc, float32_t *pDst, uint32_t blocksize) {
+    for (uint32_t i = 0; i<blocksize; i++) {
+        pDst[i] = pSrc[i];
+    }
+}
+
+void arm_vec_add_scalar_f32(const float32_t *pSrc, const float32_t addition, float32_t *pDst, uint32_t blocksize) {
+    for (uint32_t i = 0; i<blocksize; i++) {
+        pDst[i] = pSrc[i] + addition;
+    }
+}
+
+float32_t arm_vec_magnitude(const float32_t *pA, uint32_t blockSize) {
+    float32_t accum=0.0f,tmp;
+
+    while(blockSize > 0)
+    {
+        tmp = *pA++;
+        accum += ARM_SQ(tmp);
+        blockSize --;
+    }
+    arm_sqrt_f32(accum,&tmp);
+    return(tmp);
 }
 
 void arm_mat_identity_f32(arm_matrix_instance_f32 *M) {

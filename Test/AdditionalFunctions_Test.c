@@ -91,3 +91,36 @@ TEST(AdditionalFunctions, VectorCrossProduct2) {
     float32_t expected[3] = { 24, 0, 0};
     TEST_ASSERT_FLOAT_ARRAY_WITHIN(0.00001, expected, actual, 3);
 }
+
+TEST(AdditionalFunctions, VectorNorm) {
+    float32_t a[3] = {1, 2, 3};
+
+    float32_t actual;
+    arm_vec_norm_f32(a, 3, &actual);
+
+    TEST_ASSERT_EQUAL_FLOAT(3.741658, actual);
+}
+
+TEST(AdditionalFunctions, VectorNormalize) {
+    float32_t a[3] = {1, 2, 3};
+
+    float32_t actual[3];
+    arm_vec_normalize_f32(a, actual, 3);
+
+    float32_t norm;
+    arm_vec_norm_f32(actual, 3, &norm);
+
+    TEST_ASSERT_EQUAL_FLOAT(1, norm);
+}
+
+TEST(AdditionalFunctions, VectorNormalize2) {
+    float32_t a[3] = {1, -2, 3};
+
+    float32_t actual[3];
+    arm_vec_normalize_f32(a, actual, 3);
+
+    float32_t norm;
+    arm_vec_norm_f32(actual, 3, &norm);
+
+    TEST_ASSERT_EQUAL_FLOAT(1, norm);
+}

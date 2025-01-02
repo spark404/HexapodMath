@@ -9,6 +9,8 @@ static void runAllTests(void)
     RUN_TEST_GROUP(InverseKinematics)
     RUN_TEST_GROUP(AdditionalFunctions)
     RUN_TEST_GROUP(ForwardKinematics)
+    RUN_TEST_GROUP(Matrix3D)
+    RUN_TEST_GROUP(Hexapod)
     RUN_TEST_GROUP(HexapodMath)
 }
 
