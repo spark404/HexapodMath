@@ -5,6 +5,11 @@
 #include "arm_math.h"
 #include "additional_functions.h"
 
+/// Project a point
+/// \param radius
+/// \param origin
+/// \param direction
+/// \param point
 void project_point_on_circle(const float32_t radius, const float32_t origin[2], const float32_t direction[2], float32_t point[2]) {
     float32_t direction_magnitude = arm_vec_magnitude(direction, 2);
 
