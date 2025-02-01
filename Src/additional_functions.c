@@ -33,7 +33,7 @@ void arm_vec_normalize_f32(const float32_t *pSrc, float32_t *pDst, uint32_t bloc
     }
 }
 
-void arm_vec_skew_matrix(float32_t vector[3], arm_matrix_instance_f32 *S) {
+void arm_vec_skew_matrix_f32(float32_t vector[3], arm_matrix_instance_f32 *S) {
     assert(S->numCols == 3);
     assert(S->numRows == 3);
 
@@ -50,7 +50,7 @@ void arm_vec_skew_matrix(float32_t vector[3], arm_matrix_instance_f32 *S) {
     S->pData[2 * 3 + 2] = 0;
 }
 
-void arm_vec_cross(const float32_t *pSrcA, const float32_t *pSrcB, float32_t *pDst, uint32_t blocksize)
+void arm_vec_cross_f32(const float32_t *pSrcA, const float32_t *pSrcB, float32_t *pDst, uint32_t blocksize)
 {
     assert(blocksize == 3); // Not implemented for any other lenght
     pDst[0] = pSrcA[1] * pSrcB[2] - pSrcA[2] * pSrcB[1];
@@ -58,14 +58,14 @@ void arm_vec_cross(const float32_t *pSrcA, const float32_t *pSrcB, float32_t *pD
     pDst[2] = pSrcA[0] * pSrcB[1] - pSrcA[1] * pSrcB[0];
 }
 
-void arm_vec_add(const float32_t *pSrcA, const float32_t *pSrcB, float32_t *pDst, uint32_t blocksize)
+void arm_vec_add_f32(const float32_t *pSrcA, const float32_t *pSrcB, float32_t *pDst, uint32_t blocksize)
 {
     for (uint32_t i = 0; i<blocksize; i++) {
         pDst[i] = pSrcA[i] + pSrcB[i];
     }
 }
 
-void arm_vec_sub(const float32_t *pSrcA, const float32_t *pSrcB, float32_t *pDst, uint32_t blocksize)
+void arm_vec_sub_f32(const float32_t *pSrcA, const float32_t *pSrcB, float32_t *pDst, uint32_t blocksize)
 {
     for (uint32_t i = 0; i<blocksize; i++) {
         pDst[i] = pSrcA[i] - pSrcB[i];
@@ -90,7 +90,7 @@ void arm_vec_add_scalar_f32(const float32_t *pSrc, const float32_t addition, flo
     }
 }
 
-float32_t arm_vec_magnitude(const float32_t *pA, uint32_t blockSize) {
+float32_t arm_vec_magnitude_f32(const float32_t *pA, uint32_t blockSize) {
     float32_t accum=0.0f,tmp;
 
     while(blockSize > 0)
@@ -123,6 +123,11 @@ void arm_mat_mult_scalar_f32(const float32_t value, arm_matrix_instance_f32 *Msr
     }
 }
 
+/// Create a transformation matrix from a rotation matrix and a translation
+///
+/// \param Rsrc 3x3 rotation matrix
+/// \param tsrc transformation vector
+/// \param Tdst [out] 4x4 transformation matrix
 void arm_mat_transformation_matrix_f32(arm_matrix_instance_f32 *Rsrc, float32_t tsrc[3], arm_matrix_instance_f32 *Tdst) {
     assert(Rsrc->numCols == 3);
     assert(Rsrc->numRows == 3);

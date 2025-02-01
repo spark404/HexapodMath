@@ -8,7 +8,7 @@
 
 void rodrigues_rotation_matrix(float32_t twist[6], float32_t theta, arm_matrix_instance_f32 *T) {
     MATRIX(omega_hat, 3);
-    arm_vec_skew_matrix(twist, &omega_hat);
+    arm_vec_skew_matrix_f32(twist, &omega_hat);
 
     MATRIX(I, 3);
     arm_mat_identity_f32(&I);
@@ -36,7 +36,7 @@ void rodrigues_rotation_matrix(float32_t twist[6], float32_t theta, arm_matrix_i
     // t = (I - e_omega_hat_theta)*(cross(w,v)) + w * transpose(w) * v * theta;
     arm_mat_sub_f32(&I, &e_omega_hat_theta, &t1);
     float32_t wxv[3];
-    arm_vec_cross(&twist[0], &twist[3], wxv, 3);
+    arm_vec_cross_f32(&twist[0], &twist[3], wxv, 3);
 
     float32_t v1[3];
     arm_mat_vec_mult_f32(&t1, wxv, v1);
@@ -58,7 +58,7 @@ void rodrigues_rotation_matrix(float32_t twist[6], float32_t theta, arm_matrix_i
     }
 
     float32_t t[3];
-    arm_vec_add(v1, t5, t, 3);
+    arm_vec_add_f32(v1, t5, t, 3);
 
     arm_mat_transformation_matrix_f32(&e_omega_hat_theta, t, T);
 }
