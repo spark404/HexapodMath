@@ -6,6 +6,12 @@ if (NOT DEFINED CMSISDSP)
     set(CMSISDSP /Users/hugo/Projects/CMSIS-DSP)
 endif()
 
+if (EXISTS "${CMSISDSP}")
+  message(STATUS "Using CMSIS-DSP at ${CMSISDSP}")
+else()
+  message( FATAL_ERROR "No CMSIS-DSP at ${CMSISDSP}" )
+endif()
+
 file(GLOB_RECURSE SOURCES "Src/*.c")
 file(GLOB_RECURSE TEST_SOURCES "Test/*.c")
 
