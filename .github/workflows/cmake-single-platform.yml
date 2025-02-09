@@ -28,7 +28,7 @@ jobs:
         path: CMSIS-DSP
 
     - name: Configure CMSIS-DSP
-      run: cmake -B ${{github.workspace}}/CMSIS-DSP/Debug
+      run: cmake -B ${{github.workspace}}/CMSIS-DSP/Debug -DHOST=ON
       working-directory: ${{github.workspace}}/CMSIS-DSP
 
     - name: Build CMSIS-DSP
