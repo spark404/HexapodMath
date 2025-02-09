@@ -20,7 +20,7 @@ TEST(AdditionalFunctions, SkewMatrix) {
     float32_t vector[3] = {2, 3, 4};
     MATRIX(actual, 3);
 
-    arm_vec_skew_matrix(vector, &actual);
+    arm_vec_skew_matrix_f32(vector, &actual);
 
     float32_t expected[3*3] = { 0.f, -4.f, 3.f,
                                 4.f, 0.f, -2.f,
@@ -75,7 +75,7 @@ TEST(AdditionalFunctions, VectorCrossProduct) {
     float32_t b[3] = {3, 2, 1};
 
     float32_t actual[3];
-    arm_vec_cross(a, b, actual, 3);
+    arm_vec_cross_f32(a, b, actual, 3);
 
     float32_t expected[3] = { -4, 8, -4};
     TEST_ASSERT_FLOAT_ARRAY_WITHIN(0.00001, expected, actual, 3);
@@ -86,7 +86,7 @@ TEST(AdditionalFunctions, VectorCrossProduct2) {
     float32_t b[3] = {0, 0, 24};
 
     float32_t actual[3];
-    arm_vec_cross(a, b, actual, 3);
+    arm_vec_cross_f32(a, b, actual, 3);
 
     float32_t expected[3] = { 24, 0, 0};
     TEST_ASSERT_FLOAT_ARRAY_WITHIN(0.00001, expected, actual, 3);
