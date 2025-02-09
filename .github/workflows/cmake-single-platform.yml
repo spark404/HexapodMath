@@ -27,6 +27,14 @@ jobs:
         repository: ARM-software/CMSIS-DSP
         path: CMSIS-DSP
 
+    - name: Configure CMSIS-DSP
+      run: cmake -B ${{github.workspace}}/CMSIS-DSP/Debug
+      working-directory: ${{github.workspace}}/CMSIS-DSP
+
+    - name: Build CMSIS-DSP
+      run: cmake --build ${{github.workspace}}/CMSIS-DSP/Debug --config Debug
+      working-directory: ${{github.workspace}}/CMSIS-DSP
+
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
