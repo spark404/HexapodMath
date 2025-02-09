@@ -24,7 +24,7 @@ jobs:
 
     - uses: actions/checkout@v4
       with:
-        name: ARM-software/CMSIS-DSP
+        repository: ARM-software/CMSIS-DSP
 
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
