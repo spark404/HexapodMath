@@ -28,6 +28,10 @@ target_include_directories(HexapodMath
 target_sources(HexapodMath
         PRIVATE ${SOURCES}
 )
+# Workaround to make CMSIS_DSP includes work on Ubuntu
+if (HOST)
+    target_compile_definitions(HexapodMath PUBLIC __GNUC_PYTHON__)
+endif()
 
 enable_testing()
 
@@ -54,10 +58,16 @@ target_link_directories(HexapodMath_Test
 )
 
 target_link_libraries(HexapodMath_Test
-        PUBLIC HexapodMath HexapodMath_Tests
+        PUBLIC HexapodMath_Tests HexapodMath
         PRIVATE CMSISDSP
 )
 
 add_test(NAME HexapodMath_Test
         COMMAND HexapodMath_Test
 )
+
+# Workaround to make CMSIS_DSP includes work on Ubuntu
+if (HOST)
+    target_compile_definitions(HexapodMath_Tests PUBLIC __GNUC_PYTHON__)
+    target_link_libraries(HexapodMath_Test PRIVATE m)
+endif()
