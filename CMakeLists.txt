@@ -1,7 +1,9 @@
 cmake_minimum_required (VERSION 3.14)
 project(HexapodMath)
 
+include(FetchContent)
 include(ExternalProject)
+
 ExternalProject_Add(unity-lib
         GIT_REPOSITORY    https://github.com/ThrowTheSwitch/Unity.git
         GIT_TAG           master
@@ -11,15 +13,14 @@ ExternalProject_Add(unity-lib
         CMAKE_ARGS        -DUNITY_EXTENSION_FIXTURE=ON
 )
 
-ExternalProject_Add(cmsis-dsp
-        GIT_REPOSITORY    https://github.com/ARM-software/CMSIS-DSP
-        GIT_TAG           main
-        SOURCE_DIR        "${CMAKE_BINARY_DIR}/cmsis-dsp-src"
-        BINARY_DIR        "${CMAKE_BINARY_DIR}/cmsis-dsp-build"
-        SOURCE_SUBDIR     "Source"
-        INSTALL_COMMAND   ""
-        CMAKE_ARGS        -DHOST=ON
+FetchContent_Declare(
+        cmsis-dsp
+        GIT_REPOSITORY https://github.com/ARM-software/CMSIS-DSP
+        GIT_TAG main
+        OVERRIDE_FIND_PACKAGE
 )
+FetchContent_MakeAvailable(cmsis-dsp)
+
 
 file(GLOB_RECURSE SOURCES "Src/*.c")
 file(GLOB_RECURSE TEST_SOURCES "Test/*.c")
@@ -30,18 +31,15 @@ file(GLOB_RECURSE TEST_SOURCES "Test/*.c")
 add_library(HexapodMath STATIC)
 
 target_include_directories(HexapodMath
-        PUBLIC "Inc"
+        PUBLIC
+        Inc
         PRIVATE
         PrivateInc
-        ${CMAKE_BINARY_DIR}/cmsis-dsp-src/Include
+        ${cmsis-dsp_SOURCE_DIR}/Include
 )
 
 target_sources(HexapodMath
         PRIVATE ${SOURCES}
-)
-
-add_dependencies(HexapodMath
-        cmsis-dsp
 )
 
 # Workaround to make CMSIS_DSP includes work on Ubuntu
@@ -67,13 +65,11 @@ target_include_directories(HexapodMath_Test
 
 target_link_directories(HexapodMath_Test
         PRIVATE
-        ${CMAKE_BINARY_DIR}/cmsis-dsp-build/
         ${CMAKE_BINARY_DIR}/unity-build/
 )
 
 add_dependencies(HexapodMath_Test
         unity-lib
-        cmsis-dsp
 )
 
 target_link_libraries(HexapodMath_Test
@@ -82,7 +78,6 @@ target_link_libraries(HexapodMath_Test
         CMSISDSP
         unity
 )
-
 
 add_test(NAME HexapodMath_Test
         COMMAND HexapodMath_Test
