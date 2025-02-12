@@ -2,7 +2,7 @@ cmake_minimum_required (VERSION 3.14)
 project(HexapodMath)
 
 include(ExternalProject)
-ExternalProject_Add(unity
+ExternalProject_Add(unity-lib
         GIT_REPOSITORY    https://github.com/ThrowTheSwitch/Unity.git
         GIT_TAG           master
         SOURCE_DIR        "${CMAKE_BINARY_DIR}/unity-src"
@@ -11,16 +11,15 @@ ExternalProject_Add(unity
         CMAKE_ARGS        -DUNITY_EXTENSION_FIXTURE=ON
 )
 
-# Set the location of the CMSIS_DSP Library
-if (NOT DEFINED CMSISDSP)
-    set(CMSISDSP /Users/hugo/Projects/CMSIS-DSP)
-endif()
-
-if (EXISTS "${CMSISDSP}")
-  message(STATUS "Using CMSIS-DSP at ${CMSISDSP}")
-else()
-  message( FATAL_ERROR "No CMSIS-DSP at ${CMSISDSP}" )
-endif()
+ExternalProject_Add(cmsis-dsp
+        GIT_REPOSITORY    https://github.com/ARM-software/CMSIS-DSP
+        GIT_TAG           main
+        SOURCE_DIR        "${CMAKE_BINARY_DIR}/cmsis-dsp-src"
+        BINARY_DIR        "${CMAKE_BINARY_DIR}/cmsis-dsp-build"
+        SOURCE_SUBDIR     "Source"
+        INSTALL_COMMAND   ""
+        CMAKE_ARGS        -DHOST=ON
+)
 
 file(GLOB_RECURSE SOURCES "Src/*.c")
 file(GLOB_RECURSE TEST_SOURCES "Test/*.c")
@@ -32,11 +31,17 @@ add_library(HexapodMath STATIC)
 
 target_include_directories(HexapodMath
         PUBLIC "Inc"
-        PRIVATE "PrivateInc" ${CMSISDSP}/Include
+        PRIVATE
+        PrivateInc
+        ${CMAKE_BINARY_DIR}/cmsis-dsp-src/Include
 )
 
 target_sources(HexapodMath
         PRIVATE ${SOURCES}
+)
+
+add_dependencies(HexapodMath
+        cmsis-dsp
 )
 
 # Workaround to make CMSIS_DSP includes work on Ubuntu
@@ -50,26 +55,32 @@ add_executable(HexapodMath_Test
         ${TEST_SOURCES}
 )
 
-
 target_include_directories(HexapodMath_Test
-        PRIVATE Unity/Inc ${CMSISDSP}/Include PrivateInc Inc
-)
-
-target_include_directories(HexapodMath_Test
-        PRIVATE Unity/Inc ${CMSISDSP}/Include PrivateInc
+        PRIVATE
+        PrivateInc
+        Inc
+        ${CMAKE_BINARY_DIR}/unity-src/src
+        ${CMAKE_BINARY_DIR}/unity-src/extras/fixture/src
+        ${CMAKE_BINARY_DIR}/unity-src/extras/memory/src
+        ${CMAKE_BINARY_DIR}/cmsis-dsp-src/Include
 )
 
 target_link_directories(HexapodMath_Test
-        PRIVATE ${CMSISDSP}/cmake-build-debug/Source
+        PRIVATE
+        ${CMAKE_BINARY_DIR}/cmsis-dsp-build/
+        ${CMAKE_BINARY_DIR}/unity-build/
 )
 
 add_dependencies(HexapodMath_Test
-        unity
+        unity-lib
+        cmsis-dsp
 )
 
 target_link_libraries(HexapodMath_Test
-        PRIVATE CMSISDSP HexapodMath
-        ${CMAKE_BINARY_DIR}/unity-build/libunity.a
+        PRIVATE
+        HexapodMath
+        CMSISDSP
+        unity
 )
 
 
