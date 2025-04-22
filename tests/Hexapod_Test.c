@@ -3,7 +3,7 @@
 //
 #include "unity_fixture.h"
 
-#include "hexapod.h"
+#include "hexapodmath/hexapod.h"
 
 TEST_GROUP(Hexapod);
 

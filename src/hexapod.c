@@ -3,8 +3,8 @@
 //
 
 #include "arm_math.h"
-#include "additional_functions.h"
-#include "hexapod.h"
+#include "hexapodmath/additional_functions.h"
+#include "hexapodmath/hexapod.h"
 
 /// Project a point
 /// \param radius

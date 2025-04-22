@@ -2,9 +2,9 @@
 // Created by Hugo Trippaers on 20/10/2024.
 //
 
-#include "forward_kinematics.h"
+#include "hexapodmath/forward_kinematics.h"
 
-#include "additional_functions.h"
+#include "hexapodmath/additional_functions.h"
 
 void rodrigues_rotation_matrix(float32_t twist[6], float32_t theta, arm_matrix_instance_f32 *T) {
     MATRIX(omega_hat, 3);

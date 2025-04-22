@@ -2,7 +2,7 @@
 // Created by Hugo Trippaers on 25/10/2024.
 //
 
-#include "additional_functions.h"
+#include "hexapodmath/additional_functions.h"
 #include "assert.h"
 
 // Function to compute the norm of a floating-point vector

@@ -1,6 +1,5 @@
-#include "inverse_kinematics.h"
-
-#include "additional_functions.h"
+#include "hexapodmath/inverse_kinematics.h"
+#include "hexapodmath/additional_functions.h"
 
 void inverse_kinematics(const float32_t *origin, const float32_t *tip, float32_t *angles)
 {

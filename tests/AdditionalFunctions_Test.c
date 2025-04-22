@@ -3,8 +3,8 @@
 //
 #include "unity_fixture.h"
 
-#include "conversion_2d.h"
-#include "additional_functions.h"
+#include "hexapodmath/conversion_2d.h"
+#include "hexapodmath/additional_functions.h"
 
 TEST_GROUP(AdditionalFunctions);
 

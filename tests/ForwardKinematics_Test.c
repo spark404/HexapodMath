@@ -3,8 +3,8 @@
 //
 #include "unity_fixture.h"
 
-#include "forward_kinematics.h"
-#include "additional_functions.h"
+#include "hexapodmath/forward_kinematics.h"
+#include "hexapodmath/additional_functions.h"
 
 TEST_GROUP(ForwardKinematics);
 

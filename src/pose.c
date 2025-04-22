@@ -1,6 +1,6 @@
-#include "pose.h"
+#include "hexapodmath/pose.h"
 
-#include "matrix_3d.h"
+#include "hexapodmath/matrix_3d.h"
 #include "assert.h"
 
 void pose_set(pose_t pose, float32_t x, float32_t y, float32_t z, float32_t roll, float32_t pitch, float32_t yaw) {

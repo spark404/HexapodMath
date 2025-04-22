@@ -1,7 +1,7 @@
 #include <assert.h>
-#include "additional_functions.h"
+#include "hexapodmath/additional_functions.h"
 
-#include "matrix_3d.h"
+#include "hexapodmath/matrix_3d.h"
 
 typedef arm_matrix_instance_f32 *matrix;
 

@@ -3,8 +3,8 @@
 //
 #include "unity_fixture.h"
 
-#include "matrix_3d.h"
-#include "additional_functions.h"
+#include "hexapodmath/matrix_3d.h"
+#include "hexapodmath/additional_functions.h"
 
 TEST_GROUP(Matrix3D);
 

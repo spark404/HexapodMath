@@ -1,4 +1,4 @@
-#include "conversion_2d.h"
+#include "hexapodmath/conversion_2d.h"
 
 void convert_2d_polar_to_cartesian(const float32_t *polar, float32_t *cartesian)
 {
