@@ -29,6 +29,12 @@ add_library(HexapodMath STATIC
         pose.c
 )
 
+# Required to build HexapodMath in a STM32 Build
+# Copies from CMSISDSP
+if (DEFINED CMSISCORE)
+    target_include_directories(HexapodMath PUBLIC "${CMSISCORE}/Include")
+endif()
+
 target_include_directories(HexapodMath
         PUBLIC ../include ${cmsis-dsp_SOURCE_DIR}/Include
 )
