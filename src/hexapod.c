@@ -142,6 +142,20 @@ void interpolate(float32_t path[4][3], float32_t step_size, float32_t next[3]) {
         arm_vec_add_f32(path_target, segment, path_target, 3);
         path_length += segment_length;
     }
+
+    // If we are here the last segment length is less than the step_size
+    float32_t segment[3];
+    arm_vec_sub_f32(path[3], path[2], segment, 3);
+    arm_vec_add_f32(path_target, segment, next, 3);
+
+    // FIXME Prove with testcase
+    // Path:
+    // 0: 92.2359467, -175.293106, -98.9864807
+    // 1: 92.2359467, -175.293106, -98.9864807
+    // 2: 92.2359467, -175.293106, -98.9864807
+    // 3: 82.7437592, -175.296265, -100
+    //
+    // Stepsize: 9.99557495
 }
 
 uint32_t almost_equal(float32_t srcA, float32_t srcB, float32_t epsilon) {
