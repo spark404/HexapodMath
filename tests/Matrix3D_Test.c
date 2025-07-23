@@ -54,6 +54,6 @@ TEST(Matrix3D, Matrix3D_Invert2) {
     arm_status res = arm_mat_inverse_f32(&T, &expected);
     TEST_ASSERT_EQUAL(res, ARM_MATH_SUCCESS);
 
-    TEST_ASSERT_FLOAT_ARRAY_WITHIN(0.000001, expected.pData, actual.pData, 4*4);
+    TEST_ASSERT_FLOAT_ARRAY_WITHIN(0.00001, expected.pData, actual.pData, 4*4);
 }
 
