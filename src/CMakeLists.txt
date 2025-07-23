@@ -39,6 +39,10 @@ target_include_directories(HexapodMath
         PUBLIC ../include ${cmsis-dsp_SOURCE_DIR}/Include
 )
 
+target_compile_options(HexapodMath
+        PUBLIC -Wall -Wextra -pedantic -Werror
+)
+
 source_group(
         TREE "${PROJECT_SOURCE_DIR}/include"
         PREFIX "Header Files"
