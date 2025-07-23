@@ -1,6 +1,8 @@
 #include "hexapodmath/inverse_kinematics.h"
 #include "hexapodmath/additional_functions.h"
 
+#include "math.h"
+
 void inverse_kinematics(const float32_t *origin, const float32_t *tip, float32_t *angles)
 {
     // TODO This should come from a robot definition file
