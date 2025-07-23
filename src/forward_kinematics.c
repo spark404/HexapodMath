@@ -63,7 +63,7 @@ void rodrigues_rotation_matrix(float32_t twist[6], float32_t theta, arm_matrix_i
     arm_mat_transformation_matrix_f32(&e_omega_hat_theta, t, T);
 }
 
-void forward_kinematics(float32_t angles[3], float32_t coordinates[3]) {
+void forward_kinematics(const float32_t angles[3], float32_t coordinates[3]) {
     /* Basic configuration of the robot
      */
     float32_t l1 = 24.f; // mm

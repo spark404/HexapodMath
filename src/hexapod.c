@@ -22,10 +22,8 @@ void project_point_on_circle(const float32_t radius, const float32_t origin[2], 
     float32_t direction_normalized[2];
     arm_vec_normalize_f32(direction, direction_normalized, 2);
 
-    float32_t clamped_direction_magnitude = fmaxf(direction_magnitude, radius);
-
     float32_t a[2];
-    arm_vec_mult_scalar_f32(direction_normalized, clamped_direction_magnitude, a, 2);
+    arm_vec_mult_scalar_f32(direction_normalized, radius, a, 2);
 
     arm_vec_add_f32(origin, a, point, 2);
 }
@@ -144,9 +142,7 @@ void interpolate(float32_t path[4][3], float32_t step_size, float32_t next[3]) {
     }
 
     // If we are here the last segment length is less than the step_size
-    float32_t segment[3];
-    arm_vec_sub_f32(path[3], path[2], segment, 3);
-    arm_vec_add_f32(path_target, segment, next, 3);
+    arm_vec_copy_f32(path_target, next, 3);
 
     // FIXME Prove with testcase
     // Path:
