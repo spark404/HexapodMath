@@ -40,7 +40,7 @@ target_include_directories(HexapodMath
 )
 
 target_compile_options(HexapodMath
-        PUBLIC -Wall -Wextra -pedantic -Werror
+        PRIVATE -Wall -Wextra -pedantic -Werror
 )
 
 source_group(
