@@ -52,7 +52,7 @@ void arm_vec_skew_matrix_f32(float32_t vector[3], arm_matrix_instance_f32 *S) {
 
 void arm_vec_cross_f32(const float32_t *pSrcA, const float32_t *pSrcB, float32_t *pDst, uint32_t blocksize)
 {
-    assert(blocksize == 3); // Not implemented for any other lenght
+    assert(blocksize == 3); // Not implemented for any other length
     pDst[0] = pSrcA[1] * pSrcB[2] - pSrcA[2] * pSrcB[1];
     pDst[1] = pSrcA[2] * pSrcB[0] - pSrcA[0] * pSrcB[2];
     pDst[2] = pSrcA[0] * pSrcB[1] - pSrcA[1] * pSrcB[0];
