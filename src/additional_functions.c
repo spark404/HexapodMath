@@ -4,6 +4,7 @@
 
 #include "hexapodmath/additional_functions.h"
 #include "assert.h"
+#include "strings.h"
 
 // Function to compute the norm of a floating-point vector
 void arm_vec_norm_f32(const float32_t *pSrc, uint32_t blockSize, float32_t *pResult) {
