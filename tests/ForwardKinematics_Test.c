@@ -6,6 +6,10 @@
 #include "hexapodmath/forward_kinematics.h"
 #include "hexapodmath/additional_functions.h"
 
+#ifndef M_PI_2
+#define M_PI_2      1.57079632679489661923132169163975144   /* pi/2           */
+#endif
+
 TEST_GROUP(ForwardKinematics);
 
 TEST_SETUP(ForwardKinematics) {

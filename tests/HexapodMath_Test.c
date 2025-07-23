@@ -7,6 +7,10 @@
 #include "hexapodmath/additional_functions.h"
 #include "hexapodmath/forward_kinematics.h"
 
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
+
 TEST_GROUP(HexapodMath);
 
 TEST_SETUP(HexapodMath)

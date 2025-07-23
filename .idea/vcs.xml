@@ -4,5 +4,7 @@
     <mapping directory="" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/cmake-build-debug/_deps/cmsis-dsp-src" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/cmake-build-debug/unity-src" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/debug-gcc/_deps/cmsis-dsp-src" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/debug-gcc/unity-src" vcs="Git" />
   </component>
 </project>

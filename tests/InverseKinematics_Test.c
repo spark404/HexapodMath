@@ -3,12 +3,11 @@
 //
 #include "unity_fixture.h"
 
-#include "hexapodmath/conversion_2d.h"
 #include "hexapodmath/inverse_kinematics.h"
-#include "hexapodmath/pose.h"
-#include "hexapodmath/matrix_3d.h"
-#include "hexapodmath/additional_functions.h"
-#include "hexapodmath/forward_kinematics.h"
+
+#ifndef M_PI_2
+#define M_PI_2      1.57079632679489661923132169163975144   /* pi/2           */
+#endif
 
 TEST_GROUP(InverseKinematics);
 
